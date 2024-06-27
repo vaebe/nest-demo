@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LogsController } from './logs/logs.controller';
@@ -12,6 +12,7 @@ import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -49,6 +50,7 @@ import { UserModule } from './user/user.module';
     RolesModule,
   ],
   controllers: [AppController, LogsController, RolesController],
-  providers: [AppService, LogsService, RolesService],
+  providers: [AppService, LogsService, RolesService, Logger],
+  exports: [Logger],
 })
 export class AppModule {}
