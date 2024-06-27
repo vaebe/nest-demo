@@ -47,6 +47,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger({ instance: winstonInstance }),
+    cors: true,
   });
 
   // api 前缀
