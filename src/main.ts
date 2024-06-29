@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as winston from 'winston';
 import { utilities, WinstonModule } from 'nest-winston';
 import 'winston-daily-rotate-file';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const winstonInstance = winston.createLogger({
@@ -52,6 +53,16 @@ async function bootstrap() {
 
   // api 前缀
   app.setGlobalPrefix('api');
+
+  // swagger 配置
+  const config = new DocumentBuilder()
+    .setTitle('nestjs-api')
+    .setDescription('nestjs-练习')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
 }
