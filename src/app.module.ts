@@ -1,6 +1,5 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { LogsController } from './logs/logs.controller';
 import { LogsService } from './logs/logs.service';
 import { LogsModule } from './logs/logs.module';
@@ -50,7 +49,7 @@ import { UserModule } from './user/user.module';
     RolesModule,
   ],
   controllers: [AppController, LogsController, RolesController],
-  providers: [AppService, LogsService, RolesService, Logger],
+  providers: [LogsService, RolesService, Logger],
   exports: [Logger],
 })
 export class AppModule {}
