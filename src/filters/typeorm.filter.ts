@@ -24,6 +24,6 @@ export class TypeormFilter implements ExceptionFilter {
     }
 
     this.logger.warn(exception);
-    response.status(201).json(responseData);
+    response.status(290).json(responseData);
   }
 }
