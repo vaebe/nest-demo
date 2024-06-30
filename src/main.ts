@@ -4,6 +4,8 @@ import * as winston from 'winston';
 import { utilities, WinstonModule } from 'nest-winston';
 import 'winston-daily-rotate-file';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
+import { TypeormFilter } from './filters/typeorm.filter';
 
 async function bootstrap() {
   const winstonInstance = winston.createLogger({
@@ -63,6 +65,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+
+  app.useGlobalFilters(new TypeormFilter(Logger));
 
   await app.listen(3000);
 }
