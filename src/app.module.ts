@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Global()
 @Module({
@@ -47,6 +48,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     LogsModule,
     RolesModule,
+    AuthModule,
   ],
   controllers: [AppController, LogsController, RolesController],
   providers: [LogsService, RolesService, Logger],
