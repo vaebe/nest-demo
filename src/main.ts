@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'winston-daily-rotate-file';
 import { Logger } from '@nestjs/common';
-import { TypeormFilter } from './filters/typeorm.filter';
+import { TypeormFilter, HttpExceptionFilter } from './filters';
 import { setupSwagger, createWinstonLogger } from './plugins';
 
 async function bootstrap() {
@@ -18,7 +18,10 @@ async function bootstrap() {
   setupSwagger(app);
 
   // 绑定全局过滤器
-  app.useGlobalFilters(new TypeormFilter(Logger));
+  app.useGlobalFilters(
+    new TypeormFilter(Logger),
+    new HttpExceptionFilter(Logger),
+  );
 
   await app.listen(3000);
 }

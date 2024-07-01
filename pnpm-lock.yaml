@@ -29,6 +29,9 @@ dependencies:
   '@nestjs/typeorm':
     specifier: ^10.0.2
     version: 10.0.2(@nestjs/common@10.3.9)(@nestjs/core@10.3.9)(reflect-metadata@0.2.2)(rxjs@7.8.1)(typeorm@0.3.20)
+  dayjs:
+    specifier: ^1.11.11
+    version: 1.11.11
   mysql2:
     specifier: ^3.10.1
     version: 3.10.1
