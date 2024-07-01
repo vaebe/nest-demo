@@ -12,9 +12,11 @@ export class TypeormFilter implements ExceptionFilter {
   catch(exception: TypeORMError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
+    const request = ctx.getRequest<Request>();
 
     const responseData = {
       code: 500,
+      path: request.url,
       message: exception.message,
     };
 

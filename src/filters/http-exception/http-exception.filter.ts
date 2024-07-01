@@ -14,10 +14,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
+    const request = ctx.getRequest<Request>();
 
     const responseData = {
       code: exception.getStatus(),
       timestamp: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      path: request.url,
       message: exception.message || exception.name,
     };
 

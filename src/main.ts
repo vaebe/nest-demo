@@ -1,8 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'winston-daily-rotate-file';
-import { Logger } from '@nestjs/common';
-import { TypeormFilter, HttpExceptionFilter } from './filters';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import {
+  TypeormFilter,
+  HttpExceptionFilter,
+  ValidationExceptionFilter,
+} from './filters';
 import { setupSwagger, createWinstonLogger } from './plugins';
 
 async function bootstrap() {
@@ -21,7 +25,10 @@ async function bootstrap() {
   app.useGlobalFilters(
     new TypeormFilter(Logger),
     new HttpExceptionFilter(Logger),
+    new ValidationExceptionFilter(Logger),
   );
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   await app.listen(3000);
 }
