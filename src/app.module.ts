@@ -31,6 +31,7 @@ import { AuthModule } from './auth/auth.module';
         abortEarly: true, // true，在遇到第一个错误时就停止验证；false，返回所有错误。默认为false。
       },
     }),
+
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -52,6 +53,6 @@ import { AuthModule } from './auth/auth.module';
   ],
   controllers: [AppController, LogsController, RolesController],
   providers: [LogsService, RolesService, Logger],
-  exports: [Logger],
+  exports: [Logger, ConfigModule],
 })
 export class AppModule {}
