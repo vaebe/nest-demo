@@ -10,6 +10,12 @@ export function setupSwagger(app: INestApplication) {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+
+  SwaggerModule.setup('docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true, // 确保 Token 在页面刷新后仍然保留
+    },
+  });
 }
