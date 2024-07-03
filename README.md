@@ -1,11 +1,9 @@
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# nestjs-demo
 
 ## Installation
 
 ```bash
-$ pnpm install
+pnpm install
 ```
 
 ## Running the app
