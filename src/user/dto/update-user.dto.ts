@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { Length, IsNotEmpty, IsString } from 'class-validator';
-import { Roles } from '../../roles/roles.entity';
+import { Roles } from '../../roles/entities/role.entity';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
