@@ -9,6 +9,8 @@ import {
   Logger,
   UseGuards,
   Req,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -21,6 +23,7 @@ import { AdminGuard } from '../guards/admin.guard';
 @ApiTags('user')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
+@UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
   constructor(
     private readonly userService: UserService,

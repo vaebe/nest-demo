@@ -10,6 +10,7 @@ import {
 import { Logs } from '../../logs/logs.entity';
 import { Roles } from '../../roles/entities/role.entity';
 import { Profile } from './profile.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -20,6 +21,7 @@ export class User {
   username: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   // typescript -> 数据库 关联关系 Mapping
