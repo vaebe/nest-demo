@@ -17,7 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     const responseData = {
-      code: exception.getStatus(),
+      code: -1,
       timestamp: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       path: request.url,
       message: exception.message || exception.name,

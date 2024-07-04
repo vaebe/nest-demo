@@ -1,8 +1,7 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthSignInDto } from './dto/sign-in.dto';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -21,7 +20,6 @@ export class AuthController {
     };
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Post('signup')
   signUp(@Body() dto: AuthSignInDto) {
     const { username, password } = dto;

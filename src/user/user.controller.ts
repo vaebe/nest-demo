@@ -8,6 +8,7 @@ import {
   Delete,
   Logger,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -32,7 +33,9 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Req() req: any) {
+    // 获取 token 存储的数据
+    console.log(req.user);
     this.logger.log('user 查询全部数据!', 'user');
     return this.userService.findAll();
   }
