@@ -18,7 +18,7 @@ import { AdminGuard } from '../guards/admin.guard';
 
 @Controller('user')
 @ApiTags('user')
-@UseGuards(AuthGuard('jwt'), AdminGuard)
+@UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class UserController {
   constructor(
@@ -48,6 +48,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseGuards(AdminGuard)
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
