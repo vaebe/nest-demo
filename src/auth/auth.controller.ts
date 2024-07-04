@@ -13,7 +13,10 @@ export class AuthController {
   async signIn(@Body() dto: AuthSignInDto) {
     const { username, password } = dto;
 
+    const user = await this.authService.validateUser(username, password);
+
     return {
+      ...user,
       token: await this.authService.signIn(username, password),
     };
   }

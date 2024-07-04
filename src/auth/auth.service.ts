@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entities/user.entity';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class AuthService {
@@ -12,11 +13,18 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<User | null> {
     const user = await this.userService.findOneByName(username);
-    if (user && user.password === pass) {
-      return user;
+
+    if (!user) {
+      throw new BadRequestException('账号或密码不正确!');
     }
 
-    throw new BadRequestException('账号或密码不正确!');
+    const verifyPass = await argon2.verify(user.password, pass);
+
+    if (!verifyPass) {
+      throw new BadRequestException('账号或密码不正确!');
+    }
+
+    return user;
   }
 
   async signIn(username: string, password: string) {

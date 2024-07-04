@@ -9,6 +9,7 @@ export class Roles {
   @Column()
   name: string;
 
+  @Column({ unique: true })
   @Column()
   code: string;
 
