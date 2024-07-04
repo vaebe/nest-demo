@@ -29,7 +29,17 @@ export class User {
   logs: Logs[];
 
   @ManyToMany(() => Roles, (roles) => roles.users)
-  @JoinTable({ name: 'users_roles' })
+  @JoinTable({
+    name: 'users_roles',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_code',
+      referencedColumnName: 'code',
+    },
+  })
   roles: Roles[];
 
   @OneToOne(() => Profile, (profile) => profile.user)
