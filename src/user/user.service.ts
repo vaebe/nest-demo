@@ -26,11 +26,16 @@ export class UserService {
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: ['roles', 'profile'], // 指定要加载的关联关系
+    });
   }
 
   findOne(id: number) {
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: ['roles', 'profile'], // 指定要加载的关联关系
+    });
   }
 
   findOneByName(username: string) {
