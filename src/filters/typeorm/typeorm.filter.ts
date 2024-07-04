@@ -15,13 +15,13 @@ export class TypeormFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     const responseData = {
-      code: 500,
+      statusCode: 500,
       path: request.url,
       message: exception.message,
     };
 
     if (exception instanceof QueryFailedError) {
-      responseData.code = exception.driverError.errno;
+      responseData.statusCode = exception.driverError.errno;
       responseData.message = exception.driverError.message;
     }
 

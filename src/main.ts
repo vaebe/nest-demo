@@ -8,6 +8,7 @@ import {
   ValidationExceptionFilter,
 } from './filters';
 import { setupSwagger, createWinstonLogger } from './plugins';
+import { ResponseFormatInterceptor } from './interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -29,6 +30,8 @@ async function bootstrap() {
   );
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+
+  app.useGlobalInterceptors(new ResponseFormatInterceptor());
 
   await app.listen(3000);
 }
