@@ -5,17 +5,22 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
+import { RolesService } from '../roles/roles.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private roleService: RolesService,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const user = this.userRepository.create(createUserDto);
 
     user.password = await argon2.hash(user.password);
+
+    // 注册、新增的用户均为普通用户
+    user.roles = [await this.roleService.findOneByCode('normal_user')];
 
     return this.userRepository.save(user);
   }
