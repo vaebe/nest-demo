@@ -11,6 +11,7 @@ import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { MenusModule } from './menus/menus.module';
 
 @Global()
 @Module({
@@ -50,6 +51,7 @@ import { AuthModule } from './auth/auth.module';
     LogsModule,
     RolesModule,
     AuthModule,
+    MenusModule,
   ],
   controllers: [AppController, LogsController, RolesController],
   providers: [LogsService, RolesService, Logger],
