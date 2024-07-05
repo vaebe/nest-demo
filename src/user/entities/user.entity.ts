@@ -6,6 +6,9 @@ import {
   ManyToMany,
   JoinTable,
   OneToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Logs } from '../../logs/logs.entity';
 import { Roles } from '../../roles/entities/role.entity';
@@ -44,4 +47,13 @@ export class User {
 
   @OneToOne(() => Profile, (profile) => profile.user)
   profile: Profile;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }
