@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -47,7 +47,11 @@ export class UserService {
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id);
-    return this.userRepository.remove([user]);
+    const info = await this.userRepository.softDelete(id);
+
+    if (info.affected === 0) {
+      throw new HttpException('data not found', 200);
+    }
+    return info;
   }
 }

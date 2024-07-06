@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Roles } from './entities/role.entity';
@@ -35,7 +35,13 @@ export class RolesService {
     return this.rolesRepository.update(id, updateRoleDto);
   }
 
-  remove(id: number) {
-    return this.rolesRepository.delete(id);
+  async remove(id: number) {
+    const info = await this.rolesRepository.softDelete(id);
+
+    if (info.affected === 0) {
+      throw new HttpException('data not found', 200);
+    }
+
+    return info;
   }
 }

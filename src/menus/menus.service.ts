@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -29,7 +29,13 @@ export class MenusService {
     return this.menusRepository.update(id, updateMenuDto);
   }
 
-  remove(id: number) {
-    return this.menusRepository.delete(id);
+  async remove(id: number) {
+    const info = await this.menusRepository.softDelete(id);
+
+    if (info.affected === 0) {
+      throw new HttpException('data not found', 200);
+    }
+
+    return info;
   }
 }
