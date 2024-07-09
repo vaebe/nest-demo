@@ -20,8 +20,12 @@ async function bootstrap() {
 
   app.use(
     rateLimit({
-      windowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100, // limit each IP to 100 requests per windowMs
+      windowMs: 60 * 1000, // 1 minutes
+      max: 200, // 每 windowMs 最多可以调用多少个接口
+      message: {
+        code: -1,
+        message: 'Too many requests, please try again later.',
+      },
     }),
   );
 
