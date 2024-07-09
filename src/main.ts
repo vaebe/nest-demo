@@ -9,12 +9,23 @@ import {
 } from './filters';
 import { setupSwagger, createWinstonLogger } from './plugins';
 import { ResponseFormatInterceptor } from './interceptors';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: createWinstonLogger(),
     cors: true,
   });
+
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 100, // limit each IP to 100 requests per windowMs
+    }),
+  );
+
+  app.use(helmet());
 
   // api 前缀
   app.setGlobalPrefix('api');
