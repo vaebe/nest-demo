@@ -45,6 +45,7 @@ import { MenusModule } from './menus/menus.module';
         database: configService.get<string>('MYSQL_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: configService.get<string>('NODE_ENV') === 'development',
+        logging: ['schema', 'query', 'error', 'warn', 'migration'],
       }),
     }),
     UserModule,
