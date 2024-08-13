@@ -6,12 +6,13 @@ import { LogsModule } from './logs/logs.module';
 import { RolesController } from './roles/roles.controller';
 import { RolesService } from './roles/roles.service';
 import { RolesModule } from './roles/roles.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MenusModule } from './menus/menus.module';
+import { AppDataSourceOptions } from '../ormConfig';
 
 @Global()
 @Module({
@@ -33,21 +34,7 @@ import { MenusModule } from './menus/menus.module';
       },
     }),
 
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
-        host: configService.get<string>('MYSQL_HOST'),
-        port: configService.get<number>('MYSQL_PORT'),
-        username: configService.get<string>('MYSQL_USER'),
-        password: configService.get<string>('MYSQL_PASSWORD'),
-        database: configService.get<string>('MYSQL_DATABASE'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: configService.get<string>('NODE_ENV') === 'development',
-        logging: ['schema', 'query', 'error', 'warn', 'migration'],
-      }),
-    }),
+    TypeOrmModule.forRoot(AppDataSourceOptions),
     UserModule,
     LogsModule,
     RolesModule,
