@@ -1,7 +1,5 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { LogsController } from './logs/logs.controller';
-import { LogsService } from './logs/logs.service';
 import { LogsModule } from './logs/logs.module';
 import { RolesController } from './roles/roles.controller';
 import { RolesService } from './roles/roles.service';
@@ -41,8 +39,8 @@ import { AppDataSourceOptions } from '../ormConfig';
     AuthModule,
     MenusModule,
   ],
-  controllers: [AppController, LogsController, RolesController],
-  providers: [LogsService, RolesService, Logger],
+  controllers: [AppController, RolesController],
+  providers: [RolesService, Logger],
   exports: [Logger, ConfigModule],
 })
 export class AppModule {}

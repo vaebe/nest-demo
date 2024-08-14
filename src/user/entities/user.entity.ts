@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { Logs } from '../../logs/logs.entity';
+import { Log } from '../../logs/entities/log.entity';
 import { Roles } from '../../roles/entities/role.entity';
 import { Profile } from './profile.entity';
 import { Exclude } from 'class-transformer';
@@ -28,8 +28,8 @@ export class User {
   password: string;
 
   // typescript -> 数据库 关联关系 Mapping
-  @OneToMany(() => Logs, (logs) => logs.user)
-  logs: Logs[];
+  @OneToMany(() => Log, (Log) => Log.user)
+  logs: Log[];
 
   @ManyToMany(() => Roles, (roles) => roles.users)
   @JoinTable({
